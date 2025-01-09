@@ -2,10 +2,6 @@
     <Transition appear name="list">
         <div class="grid mx-auto max-w-[800px] grid-rows-[1fr] justify-center items-center w-screen">
 
-            <div class="absolute mx-auto flex top-0 left-0 right-0 justify-center p-4">
-                <img src="/blue_dot_logo.png" alt="logo" class="w-10 h-10" />
-            </div>
-
             <div class="w-screen justify-center p-4 mx-auto h-full flex-col gap-2 max-w-[800px] flex">
                 <div v-if="page == 'eval'" class="flex text-sm text-gray-500 mt-4 pl-4 rounded-md gap-4 items-center">
                     Progress:
