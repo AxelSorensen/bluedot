@@ -13,4 +13,13 @@
 
 <script setup>
 
+onMounted(async () => {
+
+  window.addEventListener("beforeunload", function (e) {
+    e.preventDefault();
+    e.returnValue = "";
+  });
+
+})
+
 </script>

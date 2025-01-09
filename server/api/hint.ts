@@ -2,8 +2,8 @@ import OpenAI from "openai";
 
 export default defineEventHandler(async (event) => {
     const body = await readBody(event);
-    const instruction = 'Given a question and an answer return a hint that helps the student answer the question without giving away the answer.';
-    const criteria = 'Only output the hint. The hint should only be based on the answer, not any previous knowledge. Hint should be one sentence and different from previous hints';
+    const instruction = 'Given a question and an answer return a hint that helps the student understand the question without giving away the answer even in a different phrasing.';
+    const criteria = 'Only output the hint. Hint should be one sentence and different from previous hints';
     const prompt = `${instruction}\n\n${criteria}`;
     const input = `Question: ${body.question}\nAnswer: ${body.answer}\nPrevious Hints: ${body.prev_hints}`;
     const openai = new OpenAI();

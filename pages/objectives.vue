@@ -27,6 +27,11 @@
                             </div>
 
                         </div>
+                        <div class="w-full text-center text-gray-500 h-full justify-center flex items-center" v-else>
+                            There are
+                            currently
+                            no objectives defined.<br>Add some below!
+                        </div>
 
                         <div v-if="pending" class="flex items-center flex-col gap-2 w-full justify-center">
                             <div v-for="i in 5"

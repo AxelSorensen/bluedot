@@ -30,7 +30,7 @@
                 <!-- Display scraped resources -->
                 <div class="h-full flex flex-col" v-else>
                     <div class="text-xs text-gray-500 custom-container overflow-scroll" v-for="resource in resources">
-                        <div>{{ resource.text }}</div>
+                        <textarea class="w-full h-full resize-none outline-none" v-model="resource.text"></textarea>
                     </div>
                 </div>
             </div>
