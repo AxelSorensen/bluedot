@@ -45,10 +45,12 @@
                                     <Hint v-if="message.type == 'hint'" :text="message.text" :pending="pending" />
 
                                 </div>
+                                <!-- Passed message -->
                                 <div v-else-if="message.role == 'end'" class="w-fit mr-20 flex flex-col gap-4">
                                     <div class="bg-green-100 text-green p-2 w-auto rounded-md">{{
                                         message.text }}
                                     </div>
+
 
 
                                 </div>
