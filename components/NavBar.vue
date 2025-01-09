@@ -13,7 +13,7 @@
         <div @click="navigateTo('/')" class="flex items-center gap-2 cursor-pointer justify-center p-4">
 
             <img src="/blue_dot_logo.png" alt="logo" class="w-10 h-10" />
-            <!-- <div class="text-xl ">BlueDot Learn</div> -->
+            <div class="text-xl ">BlueDot Learn</div>
         </div>
         <div class="flex items-center justify-center"></div>
     </div>
