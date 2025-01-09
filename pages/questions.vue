@@ -8,7 +8,6 @@
                 </div>
                 <div class="flex h-full flex-col gap-2 justify-center">
 
-
                     <div class="flex items-center gap-4 rounded-md">
                         <h2 class="text-gray-500">Objective:</h2>
                         <!-- Objective selection buttons -->
@@ -173,7 +172,6 @@ const selectObjective = (index) => {
 const num_questions = ref(3)
 
 const generateQuestions = async () => {
-    q_a.value[obj_index.value] = []
     pending.value = true
     const response = await $fetch('/api/question', {
         method: 'POST',
@@ -184,7 +182,7 @@ const generateQuestions = async () => {
         }
     })
     pending.value = false
-    q_a.value[obj_index.value] = response.q_a
+    q_a.value[obj_index.value].push(...response.q_a)
 }
 
 
