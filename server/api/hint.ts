@@ -7,7 +7,7 @@ export default defineEventHandler(async (event) => {
     const prompt = `${instruction}\n\n${criteria}`;
     const input = `Question: ${body.question}\nAnswer: ${body.answer}\nPrevious Hints: ${body.prev_hints}`;
     const openai = new OpenAI();
-    console.log('input', input)
+
     const completion = await openai.chat.completions.create({
         model: "gpt-4o",
         messages: [

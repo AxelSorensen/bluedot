@@ -40,7 +40,7 @@ const scrapeUrl = async (url) => {
     });
     content.value = response.replace(/\s+/g, ' ');
 
-    console.log(content.value);
+
 };
 const itemRefs = ref([]);
 
@@ -49,10 +49,10 @@ const end = ref(4);
 
 const highlightSource = async (objective) => {
     const scope = objective.source.split('-');
-    console.log(scope);
+
     start.value = parseInt(scope[0]);
     end.value = parseInt(scope[1]);
-    console.log(start.value, end.value);
+
 
     await nextTick();
     const element = itemRefs.value[start.value];

@@ -26,19 +26,18 @@
                             </div>
                             <h2 class=" text-base"><b>Objective:</b> {{ objectives?.[obj_index]?.text }}</h2>
                         </div>
-                        <div v-if="!q_a?.[obj_index]?.length"
-                            class="w-full text-center text-gray-500 h-full justify-center flex items-center">
-                            There are
-                            currently
-                            no questions defined for this objective.<br>Add some below!
-                        </div>
                         <div v-if="pending" class="flex h-full items-center flex-col gap-2 w-full">
                             <div v-for="i in 5"
                                 class="flex p-1 text-sm rounded-md h-8 animate-pulse w-full bg-gray-100  justify-between">
                             </div>
                             <img src="/blue_dot_logo.png" alt="logo" class="w-6 h-6 mt-4 flex animate-spin" />
                         </div>
-
+                        <div v-else-if="!q_a?.[obj_index]?.length"
+                            class="w-full text-center text-gray-500 h-full justify-center flex items-center">
+                            There are
+                            currently
+                            no questions defined for this objective.<br>Add some below!
+                        </div>
                         <div v-else ref="obj_container"
                             class="flex gap-2 flex-col custom-container overflow-scroll   text-sm rounded-md w-full">
                             <div class="flex flex-col gap-2" v-for="item, idx in q_a?.[obj_index]">

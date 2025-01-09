@@ -6,7 +6,7 @@ export default defineEventHandler(async (event) => {
     const criteria = 'If yes, return the text: Passed! Otherwise ask a question to help the user understand the answer better.';
     const prompt = `${instruction}\n\n${criteria}`;
     const openai = new OpenAI();
-    console.log('input', body.conversation)
+
     const completion = await openai.chat.completions.create({
         model: "gpt-4o",
         messages: [
