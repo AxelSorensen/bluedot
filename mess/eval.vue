@@ -1,5 +1,5 @@
 <template>
-    <div class="h-screen grid grid-rows-[auto,1fr]">
+    <div class="grid grid-rows-[auto,1fr]">
         <div class="pt-8"><img src="/blue_dot_logo.png" alt="logo" class="w-10 h-10 mx-auto" /></div>
         <div class="grid grid-cols-1 grid-rows-[auto,auto,1fr,auto,auto] h-full w-screen p-8">
             <input v-model="url" class="w-full bg-gray-100 rounded-md resize-none outline-none p-2" />
