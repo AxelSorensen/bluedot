@@ -2,8 +2,8 @@ import OpenAI from "openai";
 
 export default defineEventHandler(async (event) => {
     const body = await readBody(event);
-    const instruction = 'Given a text containing learning objective/s, split them into a meaningful list of objectives that are self explanatory.';
-    const criteria = 'Only create objectives based on the input, if no learning objective can be extracted, return an empty list. Only return objectives explicitely mentioned in the input';
+    const instruction = 'Given a learning resource, turn it into 5 short high level learning objectives.';
+    const criteria = 'Only create objectives based on the input, if no learning objective can be extracted, return an empty list.';
     const prompt = `${instruction}\n\n${criteria}`;
     const openai = new OpenAI();
     const completion = await openai.chat.completions.create({
@@ -23,8 +23,17 @@ export default defineEventHandler(async (event) => {
                         "objectives": {
                             "type": "array",
                             "items": {
-                                "type": "string",
-                            }
+                                "type": "object",
+                                "properties": {
+                                    "text": {
+                                        "type": "string"
+                                    },
+                                },
+                                "required": ["text"],
+                                "additionalProperties": false
+
+                            },
+
                         },
                     },
                     "required": ["objectives"],

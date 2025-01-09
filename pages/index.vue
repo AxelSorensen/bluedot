@@ -1,177 +1,103 @@
 <template>
+    <!-- Transition component for smooth appearance of the content -->
     <Transition appear name="list">
-        <div
-            class="grid mx-auto  max-w-[800px] grid-rows-[auto,2fr,200px]  justify-center items-center w-screen h-screen">
+        <div class="grid overflow-hidden mx-auto max-w-[800px] p-4 grid-rows-[1fr,auto] w-screen">
+            <!-- Logo section -->
 
-            <div class="pt-8"><img src="/blue_dot_logo.png" alt="logo" class="w-10 h-10 mx-auto" /></div>
-
-
-            <div class="w-screen p-4 mx-auto h-full flex-col gap-2 max-w-[800px]  flex">
-                <div v-if="page == 'eval'" class="flex text-sm text-gray-500 mt-4 pl-4 rounded-md gap-4  items-center">
-                    Progress:
-                    <div class="flex p-2 gap-4 rounded-md">
-
-                        <div :class="[objective.passed ? 'bg-green-100 text-green-600' : 'text-blue-500', obj_index == index ? 'border border-blue-500' : '']"
-                            class="flex p-1 items-center w-6 h-6 justify-center aspect-square rounded-full bg-blue-100 flex-col"
-                            v-for="objective, index in objectives">
-
-                            {{ index
-                                + 1 }}
-
-                        </div>
-                    </div>
+            <!-- Main content section -->
+            <div v-if="page == 'start'" class="flex h-full flex-col gap-2">
+                <!-- Header section -->
+                <div class="flex mb-4 gap-2 items-center">
+                    <h1 class="text-2xl mx-auto text-gray-500">Add your curriculum</h1>
                 </div>
-                <TransitionGroup name="list">
-                    <div v-if="page == 'start'" class="flex w-full flex-col justify-center items-center gap-2">
-                        <div class="flex mb-4 gap-2 items-center">
-                            <h1 class="text-2xl text-gray-500">What are your learning objectives?</h1>
-                        </div>
-
-                        <textarea placeholder="Input learning objectives" v-model="learning_objective_text"
-                            class="bg-gray-100 outline-none resize-none rounded-md p-2 w-full" rows="8"
-                            type="text"></textarea>
-                        <button class="bg-blue-500 text-white hover:bg-blue-400  rounded-md p-2 w-full"
-                            @click="detectObjectives">
-                            Detect Objectives
-                        </button>
+                <!-- Input field for resource URL -->
+                <input @input="clearResources" placeholder="Input resource url" v-model="resource_url"
+                    class="bg-gray-100 outline-none resize-none rounded-md p-2 w-full" rows="8" type="text" />
+                <!-- Extract information button -->
+                <button v-if="!resources?.length && !pending"
+                    class="bg-blue-500 text-white hover:bg-blue-400 rounded-md p-2 w-full"
+                    @click="scrapeUrl(resource_url)">
+                    Extract information
+                </button>
+                <div v-if="error" class="text-sm text-red-500 text-center">ERROR: Could not scrape url</div>
+                <!-- Loading animation while scraping -->
+                <div class="flex items-center flex-col gap-2 w-full justify-center" v-if="pending && !resources.length">
+                    <div v-for="i in 5"
+                        class="flex p-1 text-sm rounded-md h-8 animate-pulse w-full bg-gray-100 justify-between">
                     </div>
-                    <div v-else-if="page == 'objectives'" class="flex   flex-col gap-2 items-center justify-center">
-                        <h1>Learning Objectives</h1>
-                        <div v-if="!objectives.length" v-for="i in 5"
-                            class="flex p-1 text-sm rounded-md h-8 animate-pulse w-full bg-gray-100 max-w-[600px] justify-between">
-
-
-
-
-                        </div>
-                        <div v-for="objective in objectives"
-                            class="flex p-2 text-sm rounded-md w-full bg-gray-100 max-w-[600px] justify-between">
-                            <p>{{ objective.text }}</p>
-                            <input class="outline-none" :checked="objective.passed" type="checkbox" />
-                        </div>
-
-                        <button v-if="objectives.length" @click="startEval"
-                            class="bg-blue-500 hover:bg-blue-400 text-white max-w-[600px]  rounded-md p-2 w-full">Begin
-                            Evaluation</button>
-
-
-                    </div>
-
-                    <div v-else-if="page == 'eval'" class="flex  p-4 flex-col h-full w-full gap-2">
-
-
-
-                        <h1 class="text-2xl mb-4 text-gray-500">Question time</h1>
-                        <!-- <button @click="askQuestion"
-                            class="bg-blue-100 hover:bg-blue-200 w-full p-2 text-blue-500 rounded-md">Ask
-                            Question</button> -->
-
-                        <div class="flex flex-col gap-4">
-                            <div class="flex flex-col" v-for="message in conversation">
-                                <div v-if="message.role == 'system'"
-                                    :class="[message.text == 'Passed!' ? 'bg-green-100' : 'bg-gray-100']"
-                                    class="p-2 w-fit rounded-md self-start">{{
-                                        message.text
-                                    }}</div>
-                                <div v-else class="bg-blue-100 p-2 w-auto rounded-md self-end">{{
-                                    message.text
-                                    }}</div>
-                            </div>
-                        </div>
-                        <div v-if="system_question"
-                            class="flex mr-20 bg-gray-100 rounded-md   p-4 flex-col h-auto gap-2">
-                            <p class="text-sm">{{ system_question }}</p>
-                        </div>
-
-                    </div>
-                </TransitionGroup>
-
-
-
-            </div>
-
-
-            <div v-if="page == 'eval'" class="flex  p-4 flex-col h-full w-full gap-2">
-                <h1>Your answer</h1>
-                <div class="bg-gray-100 border h-full flex-col w-full rounded-md flex">
-
-                    <textarea v-model="user_response" placeholder="Answer the question to the best of your knowledge"
-                        class="bg-gray-100 outline-none text-sm resize-none rounded-md p-2 h-full w-full"
-                        type=" text"></textarea>
-                    <div class="flex justify-end">
-                        <button @click="submitAnswer"
-                            class="w-fit text-gray-500 hover:text-stone-900  hover:bg-gray-200 rounded-md text-sm p-2">Submit</button>
+                    <img src="/blue_dot_logo.png" alt="logo" class="w-6 h-6 mt-4 flex animate-spin" />
+                </div>
+                <!-- Display scraped resources -->
+                <div class="h-full flex flex-col" v-else>
+                    <div class="text-xs text-gray-500 custom-container overflow-scroll" v-for="resource in resources">
+                        <div>{{ resource.text }}</div>
                     </div>
                 </div>
             </div>
-
-
+            <!-- Continue button to navigate to the next page -->
+            <div v-if="resources.length" class="mt-4">
+                <button v-if="page == 'start'" @click="navigateTo('/objectives')"
+                    class="bg-blue-500 text-white hover:bg-blue-400 rounded-md p-2 w-full">
+                    Continue
+                </button>
+            </div>
         </div>
     </Transition>
-
-
 </template>
 
 <script setup>
-import ChevronLeft from '~icons/heroicons/chevron-left-16-solid'
-const conversation = ref([])
-const learning_objective_text = ref('')
-const objectives = ref([])
-const question = ref('')
-const user_response = ref('')
+import Sparkles from '~icons/heroicons/sparkles-16-solid'
+
+// State variables
 const page = ref('start')
-const obj_index = ref(0)
-const startEval = async () => {
-    page.value = 'eval'
-    askQuestion()
+const pending = ref(false)
+const resources = useState('resources', () => [])
+const objectives = useState('objectives')
+const q_a = useState('q_a')
+const resource_url = ref('https://aisafetyfundamentals.com/blog/what-is-ai-alignment/?_gl=1*wj273g*_ga*NDEyOTk5OTM4LjE3MjQ0MjI4MjQ.*_ga_8W59C8ZY6T*MTczNjAxODkwOS4zOC4wLjE3MzYwMTg5MDkuMC4wLjA.')
+const error = ref(null)
+const clearResources = () => {
+
+    if (error.value) {
+        error.value = null
+    }
+    if (resources.value.length) {
+        resources.value = []
+    }
+    if (objectives.value.length) {
+        objectives.value = []
+    }
+    if (q_a?.value?.length) {
+        q_a.value = []
+    }
+
+
 }
 
-const detectObjectives = async () => {
-    page.value = 'objectives'
-    const response = await $fetch('/api/detect_objectives', {
-        method: 'POST',
-        body: {
-            text: learning_objective_text.value
-        }
-    })
-    objectives.value = response.objectives.map(obj => ({ text: obj, passed: false }))
-}
+// Function to scrape URL and extract information
+const scrapeUrl = async (url) => {
 
-const askQuestion = async () => {
-    const response = await $fetch('/api/question', {
-        method: 'POST',
-        body: {
-            text: objectives.value[obj_index.value].text
-        }
-    })
-    conversation.value.push({ role: 'system', text: response })
-}
+    error.value = null
+    pending.value = true
 
-const submitAnswer = async () => {
-    conversation.value.push({ role: 'user', text: user_response.value })
-    user_response.value = ''
-    const response = await $fetch('/api/evaluate', {
-        method: 'POST',
-        body: {
-            objective: objectives.value[obj_index.value].text,
-            question: conversation.value[conversation.value.length - 2].text,
-            answer: conversation.value[conversation.value.length - 1].text
-        }
-    })
-    conversation.value.push({ role: 'system', text: response })
-    setTimeout(() => {
-        if (response == 'Passed!') {
-            conversation.value = []
-            objectives.value[obj_index.value].passed = true
-            obj_index.value++
-            if (obj_index.value < objectives.value.length) {
-                askQuestion()
-            } else {
-                page.value = 'start'
-            }
+    setTimeout(async () => {
+        try {
+            const response = await $fetch('/api/scrapeUrl', {
+                method: 'POST',
+                body: {
+                    url: url
+                }
+            });
+            pending.value = false
+            resources.value.push({ url: url, text: response.replace(/\s+/g, ' ') })
+        } catch (err) {
+            error.value = err
+            pending.value = false
         }
     }, 1000)
 
-}
+    // Simulate delay for loading animation
 
+    // Simulate delay for loading animation
+};
 </script>

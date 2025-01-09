@@ -91,7 +91,7 @@ const detectObjectives = async () => {
             text: learning_objective_text.value
         }
     })
-    objectives.value = response.objectives.map(obj => ({ text: obj, passed: false }))
+    objectives.value = response.objectives?.map(obj => ({ text: obj, passed: false }))
 }
 
 const askQuestion = async () => {
