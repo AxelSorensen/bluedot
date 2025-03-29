@@ -1,6 +1,6 @@
-# Nuxt Minimal Starter
+# BlueDot Learn
 
-Look at the [Nuxt documentation](https://nuxt.com/docs/getting-started/introduction) to learn more.
+Protoypes carried out in collaboration with BlueDot in order to improve the learning efficiency of their platform.
 
 ## Setup
 
