@@ -41,3 +41,5 @@ npm run preview    # preview production build
 ## Status
 
 🚧 Prototype for an external collaborator (BlueDot) — a `mess/` directory in the repo suggests experimental/scratch content alongside the working pages.
+
+⚠️ `npm install && npm run build` verified working as of 2026-09-03. API routes (`/api/question`, `/api/evaluate`, `/api/hint`, etc.) call OpenAI and require your own `OPENAI_API_KEY` in `.env`, which isn't provided here — build succeeds without it.
