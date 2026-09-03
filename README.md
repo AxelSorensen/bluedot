@@ -2,6 +2,8 @@
 
 Prototypes built in collaboration with BlueDot to improve the learning efficiency of their platform.
 
+![BlueDot Learn screenshot](docs/screenshot.png)
+
 ## Features
 
 - 🎯 **Objectives page** — presents learning objectives to the user
