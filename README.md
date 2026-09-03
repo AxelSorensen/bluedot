@@ -19,6 +19,14 @@ cd bluedot
 npm install
 ```
 
+## Configuration
+
+Copy `.env.example` to `.env` and fill in:
+
+- `OPENAI_API_KEY` — OpenAI API key, used by the `/api/question`, `/api/evaluate`, `/api/hint`, `/api/detect_objectives`, and `/api/detect_objectives_from_text` routes
+
+Without it, the app builds and the pages load, but those API routes will error when called.
+
 ## Usage
 
 ```bash
