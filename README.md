@@ -1,75 +1,43 @@
-# BlueDot Learn
+# 🔵 BlueDot Learn
 
-Protoypes carried out in collaboration with BlueDot in order to improve the learning efficiency of their platform.
+Prototypes built in collaboration with BlueDot to improve the learning efficiency of their platform.
 
-## Setup
+## Features
 
-Make sure to install dependencies:
+- 🎯 **Objectives page** — presents learning objectives to the user
+- ❓ **Question flow** — `questions.vue` and `play.vue` drive an interactive Q&A / exercise flow
+- 🤖 **AI-assisted content** — uses the `openai` SDK, with `cheerio` for scraping/parsing source content
+- 🎨 **Icon-driven UI** — Heroicons via `unplugin-icons`
+
+## Installation
 
 ```bash
-# npm
+git clone <this repo>
+cd bluedot
 npm install
-
-# pnpm
-pnpm install
-
-# yarn
-yarn install
-
-# bun
-bun install
 ```
 
-## Development Server
-
-Start the development server on `http://localhost:3000`:
+## Usage
 
 ```bash
-# npm
 npm run dev
-
-# pnpm
-pnpm dev
-
-# yarn
-yarn dev
-
-# bun
-bun run dev
 ```
 
-## Production
-
-Build the application for production:
+Then open [http://localhost:3000](http://localhost:3000).
 
 ```bash
-# npm
-npm run build
-
-# pnpm
-pnpm build
-
-# yarn
-yarn build
-
-# bun
-bun run build
+npm run build      # production build
+npm run generate   # static generation
+npm run preview    # preview production build
 ```
 
-Locally preview production build:
+## Built with
 
-```bash
-# npm
-npm run preview
+- [Nuxt 3](https://nuxt.com/)
+- [OpenAI API](https://platform.openai.com/)
+- [Tailwind CSS](https://tailwindcss.com/)
+- [Cheerio](https://cheerio.js.org/)
 
-# pnpm
-pnpm preview
+## Status
 
-# yarn
-yarn preview
-
-# bun
-bun run preview
-```
-
-Check out the [deployment documentation](https://nuxt.com/docs/getting-started/deployment) for more information.
+🚧 Prototype for an external collaborator (BlueDot) — a `mess/` directory in the repo suggests experimental/scratch content alongside the working pages.
